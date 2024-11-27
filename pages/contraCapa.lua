@@ -19,7 +19,7 @@ function scene:create( event )
     -- Adiciona o background
     local background = display.newImageRect(
         sceneGroup, 
-        "assets/capa.jpg",  -- caminho da imagem
+        "assets/images/Contracapa.jpg",  -- caminho da imagem
         display.contentWidth,  -- largura da tela
         display.contentHeight  -- altura da tela
     )
@@ -27,15 +27,26 @@ function scene:create( event )
     background.y = display.contentCenterY  -- centraliza verticalmente
     local btnNext = display.newImage(
         sceneGroup,
-        "assets/BtnNext.png"
+        "assets/images/home.png"
     )
     btnNext.x = display.contentWidth - 45
-    btnNext.y = display.contentHeight - 40  
+    btnNext.y = display.contentHeight - 440 
     btnNext:scale(0.8, 0.8)
 
     btnNext:addEventListener("tap", function(event)
         print("next")
-        composer.gotoScene("page02")
+        composer.gotoScene("pages.capa")
+    end)
+
+
+    local btnPrev = display.newImage(sceneGroup, "assets/images/BtnLeft.png")
+    btnPrev.x = 40  
+    btnPrev.y = display.contentHeight - 40 
+
+    btnPrev:scale(0.8, 0.8)
+    btnPrev:addEventListener("tap", function(event)
+        print("prev")
+        composer.gotoScene("pages.page05")
     end)
 end
 

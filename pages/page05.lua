@@ -10,14 +10,14 @@ function scene:create( event )
 
     local pageText = display.newText({
         parent = sceneGroup,
-        text = "Página 03",
+        text = "Página 05",
         x = display.contentWidth - 60,
         y = 30,
         font = native.systemFontBold,
         fontSize = 24,
     })
     pageText:setFillColor(0, 0, 0)
-    local btnNext = display.newImage(sceneGroup, "assets/BtnNext.png")
+    local btnNext = display.newImage(sceneGroup, "assets/images/BtnNext.png")
     btnNext.x = display.contentWidth - 45
     btnNext.y = display.contentHeight - 40 
     btnNext:scale(0.8, 0.8)
@@ -25,18 +25,18 @@ function scene:create( event )
 
     btnNext:addEventListener("tap", function(event)
         print("next")
-        composer.gotoScene("page04", { effect = "fade" })
+        composer.gotoScene("pages.contraCapa", { effect = "fade" })
     end)
 
 
-    local btnPrev = display.newImage(sceneGroup, "Assets/BtnLeft.png")
+    local btnPrev = display.newImage(sceneGroup, "assets/images/BtnLeft.png")
     btnPrev.x = 40  
     btnPrev.y = display.contentHeight - 40 
 
     btnPrev:scale(0.8, 0.8)
     btnPrev:addEventListener("tap", function(event)
         print("prev")
-        composer.gotoScene("page02")
+        composer.gotoScene("pages.page04")
     end)
 end
 
