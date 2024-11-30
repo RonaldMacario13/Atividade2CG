@@ -26,13 +26,17 @@ function scene:create(event)
 
     -- Função para mostrar/ocultar imagens associadas aos botões
     local function toggleImage(image)
-        if image.isVisible then
-            image.isVisible = false
-            image:scale(0.1, 0.1)
-        else
-            image.isVisible = true
-            image:scale(10, 10)
-        end
+        -- Fecha todas as imagens abertas antes de abrir a nova
+        overlay.isVisible = true
+        if image1 then image1.isVisible = false end
+        if image2 then image2.isVisible = false end
+        if image3 then image3.isVisible = false end
+
+        -- Mostra a nova imagem
+        image.isVisible = true
+        overlay:toFront() -- Move o overlay para o topo
+        image:toFront() -- Garante que a imagem fique acima do overlay
+    end
     end
 
     -- Botão 1
