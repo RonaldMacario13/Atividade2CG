@@ -37,6 +37,13 @@ function scene:create(event)
         overlay:toFront() -- Move o overlay para o topo
         image:toFront() -- Garante que a imagem fique acima do overlay
     end
+
+    -- Função para fechar qualquer imagem aberta
+    local function closeImage()
+        overlay.isVisible = false
+        if image1 then image1.isVisible = false end
+        if image2 then image2.isVisible = false end
+        if image3 then image3.isVisible = false end
     end
 
     -- Botão 1
