@@ -116,4 +116,42 @@ function scene:create(event)
         -- Exemplo de interrupção automática após 10 segundos (ajuste conforme necessário)
         timer.performWithDelay(10000, stopAnimation)
     end
+
+    -- Elementos interativos
+    local food = display.newImageRect(sceneGroup, "assets/images/Pag2/Objetos.png", 70, 70)
+    food.x = display.contentWidth * 0.5
+    food.y = display.contentHeight - 100
+    food.id = "alimentacao"
+
+    -- Evento de arrastar
+    local function onDrag(event)
+        local target = event.target
+        if event.phase == "began" then
+            display.getCurrentStage():setFocus(target)
+            target.isFocus = true
+        elseif event.phase == "moved" then
+            if target.isFocus then
+                target.x = event.x
+                target.y = event.y
+            end
+        elseif event.phase == "ended" or event.phase == "cancelled" then
+            if target.isFocus then
+                display.getCurrentStage():setFocus(nil)
+                target.isFocus = false
+    
+                -- Detecta a área onde o elemento foi solto
+                if math.abs(target.x - cafeteria.x) < 75 and math.abs(target.y - cafeteria.y) < 75 then
+                    showAnimation(foodFrames, cafeteria, "alimentacao")
+                elseif math.abs(target.x - gym.x) < 75 and math.abs(target.y - gym.y) < 75 then
+                    showAnimation(activityFrames, gym, "atividade")
+                elseif math.abs(target.x - classroom.x) < 75 and math.abs(target.y - classroom.y) < 75 then
+                    showAnimation(awarenessFrames, classroom, "conscientizacao")
+                end
+    
+                -- Retorna o elemento para sua posição original
+                transition.to(target, { time = 500, x = target.initX, y = target.initY })
+            end
+        end
+        return true
+    end
 return scene
