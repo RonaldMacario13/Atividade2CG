@@ -54,6 +54,22 @@ function scene:create( event )
     btn2:addEventListener("tap", function()
         toggleImage(image2)
     end)
+
+    -- Botão 3
+    local btn3 = display.newImageRect(sceneGroup, "assets/images/Pag1/Business.png", 60, 60)
+    btn3.x = 3 * display.contentWidth / 4
+    btn3.y = display.contentHeight - 125
+
+    local image3 = display.newImageRect(sceneGroup, "assets/images/Pag1/Frame3.png", 10, 10)
+    image3.x = display.contentCenterX
+    image3.y = display.contentCenterY
+    image3.isVisible = false
+
+    btn3:addEventListener("tap", function()
+        toggleImage(image3)
+    end)
+
+    -- Botão de avançar
     local btnNext = display.newImage(sceneGroup, "assets/images/BtnNext.png")
     btnNext.x = display.contentWidth - 45
     btnNext.y = display.contentHeight - 40
