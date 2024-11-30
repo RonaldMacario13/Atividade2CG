@@ -23,19 +23,22 @@ function scene:create( event )
         display.contentWidth,  -- largura da tela
         display.contentHeight  -- altura da tela
     )
+
     background.x = display.contentCenterX  -- centraliza horizontalmente
     background.y = display.contentCenterY  -- centraliza verticalmente
+
     local btnNext = display.newImage(
         sceneGroup,
         "assets/images/BtnNext.png"
     )
+
     btnNext.x = display.contentWidth - 45
     btnNext.y = display.contentHeight - 40  
     btnNext:scale(0.8, 0.8)
 
     btnNext:addEventListener("tap", function(event)
         print("next")
-        composer.gotoScene("pages.page02")
+        composer.gotoScene("pages.page02", { effect = "fade", time = 100 })
     end)
 end
 
