@@ -23,4 +23,16 @@ function scene:create(event)
 , 100)
     classroom.x = display.contentWidth * 0.75
     classroom.y = display.contentHeight * 0.6
+
+    -- Sequências de imagens para as animações
+    local foodFrames = {
+        "assets/images/Pag2/comendo/0.png",
+        "assets/images/Pag2/comendo/1.png",
+        "assets/images/Pag2/comendo/2.png",
+        "assets/images/Pag2/comendo/3.png",
+        "assets/images/Pag2/comendo/4.png",
+        "assets/images/Pag2/comendo/5.png",
+        "assets/images/Pag2/comendo/6.png",
+        "assets/images/Pag2/comendo/7.png"
+    }
 return scene
