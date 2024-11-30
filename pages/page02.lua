@@ -21,6 +21,9 @@ function scene:create(event)
     overlay.isVisible = false
     overlay.isHitTestable = true
 
+    -- Declara as imagens como variáveis globais ao escopo da função `scene:create`
+    local image1, image2, image3
+
     -- Função para mostrar/ocultar imagens associadas aos botões
     local function toggleImage(image)
         if image.isVisible then
