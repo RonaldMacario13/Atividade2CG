@@ -81,21 +81,31 @@ function scene:create( event )
         composer.gotoScene("pages.page03", { effect = "fade" })
     end)
 
-
+    -- Botão de voltar
     local btnPrev = display.newImage(sceneGroup, "assets/images/BtnLeft.png")
     btnPrev.x = 40 
     btnPrev.y = display.contentHeight - 40
-
     btnPrev:scale(0.8, 0.8)
+
     btnPrev:addEventListener("tap", function(event)
         print("prev")
         composer.gotoScene("pages.Capa")
     end)
 end
 
+function scene:show( event )
 
+    local sceneGroup = self.view
+    local phase = event.phase
 
+    if ( phase == "will" ) then
+        -- Code here runs when the scene is still off screen (but is about to come on screen)
 
+    elseif ( phase == "did" ) then
+        -- Code here runs when the scene is entirely on screen
+
+    end
+end
 
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
