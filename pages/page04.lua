@@ -33,4 +33,19 @@ function scene:create(event)
     map.x = display.contentCenterX
     map.y = display.contentCenterY * 1.5
 
+    -- Camadas Adicionais (Invisíveis no Início)
+    local schoolLayer = display.newImageRect(sceneGroup, "assets/images/Pag3/Classroom.png", 200, 150)
+    schoolLayer.x = display.contentWidth * 0.3
+    schoolLayer.y = display.contentHeight * 0.4
+    schoolLayer.isVisible = false
+
+    local communityLayer = display.newImageRect(sceneGroup, "assets/images/Pag3/Crowd.png", 200, 150)
+    communityLayer.x = display.contentWidth * 0.5
+    communityLayer.y = display.contentHeight * 0.5
+    communityLayer.isVisible = false
+
+    local workLayer = display.newImageRect(sceneGroup, "assets/images/Pag3/Business.png", 200, 150)
+    workLayer.x = display.contentWidth * 0.7
+    workLayer.y = display.contentHeight * 0.6
+    workLayer.isVisible = false
 return scene
