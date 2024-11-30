@@ -61,4 +61,59 @@ function scene:create(event)
     local isFoodAnimating = false
     local isActivityAnimating = false
     local isAwarenessAnimating = false
+
+    -- Função para mostrar animação
+    local function showAnimation(frames, area, type)
+        -- Verifica se a animação correspondente já está em andamento
+        if (type == "alimentacao" and isFoodAnimating) or
+           (type == "atividade" and isActivityAnimating) or
+           (type == "conscientizacao" and isAwarenessAnimating) then
+            return -- Cancela a execução se já houver uma animação ativa do mesmo tipo
+        end
+    
+        -- Define o estado da animação como ativo
+        if type == "alimentacao" then
+            isFoodAnimating = true
+        elseif type == "atividade" then
+            isActivityAnimating = true
+        elseif type == "conscientizacao" then
+            isAwarenessAnimating = true
+        end
+    
+        -- Inicia a animação
+        local frameIndex = 1
+        local animation = display.newImageRect(sceneGroup, frames[frameIndex], 100, 100)
+        animation.x = area.x
+        animation.y = area.y
+    
+        local function nextFrame()
+            frameIndex = frameIndex + 1
+            if frameIndex > #frames then
+                frameIndex = 1 -- Reinicia a animação
+            end
+            animation.fill = { type = "image", filename = frames[frameIndex] }
+        end
+    
+        -- Alterna quadros a cada 250ms em looping infinito
+        local timerRef = timer.performWithDelay(250, nextFrame, 0)
+    
+        -- Função para parar a animação
+        local function stopAnimation()
+            timer.cancel(timerRef) -- Cancela o temporizador
+            display.remove(animation) -- Remove a animação
+            animation = nil
+    
+            -- Atualiza o estado da animação
+            if type == "alimentacao" then
+                isFoodAnimating = false
+            elseif type == "atividade" then
+                isActivityAnimating = false
+            elseif type == "conscientizacao" then
+                isAwarenessAnimating = false
+            end
+        end
+    
+        -- Exemplo de interrupção automática após 10 segundos (ajuste conforme necessário)
+        timer.performWithDelay(10000, stopAnimation)
+    end
 return scene
