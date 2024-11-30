@@ -16,6 +16,16 @@ function scene:create( event )
     background.x = display.contentCenterX
     background.y = display.contentCenterY
 
+    -- Função para mostrar/ocultar imagens associadas aos botões
+    local function toggleImage(image)
+        if image.isVisible then
+            image.isVisible = false
+            image:scale(0.1, 0.1)
+        else
+            image.isVisible = true
+            image:scale(10, 10)
+        end
+    end
     local btnNext = display.newImage(sceneGroup, "assets/images/BtnNext.png")
     btnNext.x = display.contentWidth - 45
     btnNext.y = display.contentHeight - 40
