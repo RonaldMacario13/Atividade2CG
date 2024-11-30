@@ -47,4 +47,18 @@ function scene:create(event)
         "assets/images/Pag2/treino/7.png"
     }
 
+    local awarenessFrames = {
+        "assets/images/Pag2/lendo/0.png",
+        "assets/images/Pag2/lendo/1.png",
+        "assets/images/Pag2/lendo/2.png",
+        "assets/images/Pag2/lendo/3.png",
+        "assets/images/Pag2/lendo/4.png",
+        "assets/images/Pag2/lendo/5.png",
+        "assets/images/Pag2/lendo/6.png",
+        "assets/images/Pag2/lendo/7.png"
+    }
+
+    local isFoodAnimating = false
+    local isActivityAnimating = false
+    local isAwarenessAnimating = false
 return scene
