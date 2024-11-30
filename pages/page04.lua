@@ -48,4 +48,39 @@ function scene:create(event)
     workLayer.x = display.contentWidth * 0.7
     workLayer.y = display.contentHeight * 0.6
     workLayer.isVisible = false
+
+    -- Detectar Gesto de Pinça com Multitouch
+    local function onPinch(event)
+        if event.phase == "began" then
+            if event.numTouches == 2 then
+                -- Armazena a distância inicial entre os dois dedos
+                map.startDistance = math.sqrt((event.x - event.xStart) ^ 2 + (event.y - event.yStart) ^ 2)
+                map.startScale = map.xScale
+            end
+        elseif event.phase == "moved" and event.numTouches == 2 then
+            -- Calcula a nova distância entre os dedos
+            local newDistance = math.sqrt((event.x - event.xStart) ^ 2 + (event.y - event.yStart) ^ 2)
+            local scale = newDistance / map.startDistance
+
+            -- Atualiza o zoom no mapa
+            map.xScale = map.startScale * scale
+            map.yScale = map.startScale * scale
+
+            -- Revela camadas com base no nível de zoom
+            if map.xScale > 1.5 then
+                schoolLayer.isVisible = true
+                communityLayer.isVisible = true
+                workLayer.isVisible = true
+            else
+                schoolLayer.isVisible = false
+                communityLayer.isVisible = false
+                workLayer.isVisible = false
+            end
+        elseif event.phase == "ended" or event.phase == "cancelled" then
+            -- Reseta a escala inicial quando o gesto termina
+            map.startDistance = nil
+            map.startScale = nil
+        end
+        return true
+    end
 return scene
