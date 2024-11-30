@@ -5,18 +5,17 @@ local scene = composer.newScene()
 function scene:create( event )
     local sceneGroup = self.view
 
-    local bg = display.newRect(sceneGroup, display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
-    bg:setFillColor(1, 1, 1)
+    -- Adiciona o background
+    local background = display.newImageRect(
+        sceneGroup, 
+        "assets/images/Pag1/Pagina2.png",
+        display.contentWidth,
+        display.contentHeight
+    )
 
-    local pageText = display.newText({
-        parent = sceneGroup,
-        text = "Página 02",
-        x = display.contentWidth - 60,
-        y = 30,
-        font = native.systemFontBold,
-        fontSize = 24,
-    })
-    pageText:setFillColor(0, 0, 0)
+    background.x = display.contentCenterX
+    background.y = display.contentCenterY
+
     local btnNext = display.newImage(sceneGroup, "assets/images/BtnNext.png")
     btnNext.x = display.contentWidth - 45
     btnNext.y = display.contentHeight - 40
