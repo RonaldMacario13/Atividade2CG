@@ -1,7 +1,6 @@
 local composer = require( "composer" )
 local scene = composer.newScene()
 
-
 function scene:create( event )
     local sceneGroup = self.view
 
@@ -75,7 +74,6 @@ function scene:create( event )
     btnNext.y = display.contentHeight - 40
     btnNext:scale(0.8, 0.8)
 
-
     btnNext:addEventListener("tap", function(event)
         print("next")
         composer.gotoScene("pages.page03", { effect = "fade" })
@@ -119,6 +117,13 @@ function scene:hide( event )
         -- Code here runs immediately after the scene goes entirely off screen
 
     end
+end
+
+function scene:destroy( event )
+
+    local sceneGroup = self.view
+    -- Code here runs prior to the removal of scene's view
+
 end
 
 scene:addEventListener( "create", scene )
