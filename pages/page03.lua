@@ -35,4 +35,16 @@ function scene:create(event)
         "assets/images/Pag2/comendo/6.png",
         "assets/images/Pag2/comendo/7.png"
     }
+
+    local activityFrames = {
+        "assets/images/Pag2/treino/0.png",
+        "assets/images/Pag2/treino/1.png",
+        "assets/images/Pag2/treino/2.png",
+        "assets/images/Pag2/treino/3.png",
+        "assets/images/Pag2/treino/4.png",
+        "assets/images/Pag2/treino/5.png",
+        "assets/images/Pag2/treino/6.png",
+        "assets/images/Pag2/treino/7.png"
+    }
+
 return scene
