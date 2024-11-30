@@ -68,7 +68,7 @@ function scene:create(event)
         if (type == "alimentacao" and isFoodAnimating) or
            (type == "atividade" and isActivityAnimating) or
            (type == "conscientizacao" and isAwarenessAnimating) then
-            return -- Cancela a execução se já houver uma animação ativa do mesmo tipo
+            return
         end
     
         -- Define o estado da animação como ativo
@@ -89,7 +89,7 @@ function scene:create(event)
         local function nextFrame()
             frameIndex = frameIndex + 1
             if frameIndex > #frames then
-                frameIndex = 1 -- Reinicia a animação
+                frameIndex = 1
             end
             animation.fill = { type = "image", filename = frames[frameIndex] }
         end
@@ -99,8 +99,8 @@ function scene:create(event)
     
         -- Função para parar a animação
         local function stopAnimation()
-            timer.cancel(timerRef) -- Cancela o temporizador
-            display.remove(animation) -- Remove a animação
+            timer.cancel(timerRef)
+            display.remove(animation)
             animation = nil
     
             -- Atualiza o estado da animação
@@ -118,10 +118,10 @@ function scene:create(event)
     end
 
     -- Elementos interativos
-    local food = display.newImageRect(sceneGroup, "assets/images/Pag2/Objetos.png", 70, 70)
-    food.x = display.contentWidth * 0.5
-    food.y = display.contentHeight - 100
-    food.id = "alimentacao"
+    local objs = display.newImageRect(sceneGroup, "assets/images/Pag2/Objetos.png", 70, 70)
+    objs.x = display.contentWidth * 0.5
+    objs.y = display.contentHeight - 100
+    objs.id = "alimentacao"
 
     -- Evento de arrastar
     local function onDrag(event)
@@ -156,11 +156,11 @@ function scene:create(event)
     end
 
     -- Adiciona evento de arrastar
-    food:addEventListener("touch", onDrag)
+    objs:addEventListener("touch", onDrag)
 
     -- Armazena posições iniciais dos elementos
-    food.initX = food.x
-    food.initY = food.y
+    objs.initX = objs.x
+    objs.initY = objs.y
 
 end
 
