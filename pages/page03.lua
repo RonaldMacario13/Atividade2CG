@@ -154,4 +154,15 @@ function scene:create(event)
         end
         return true
     end
+
+    -- Adiciona evento de arrastar
+    food:addEventListener("touch", onDrag)
+
+    -- Armazena posições iniciais dos elementos
+    food.initX = food.x
+    food.initY = food.y
+
+end
+
+scene:addEventListener("create", scene)
 return scene
