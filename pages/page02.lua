@@ -1,12 +1,12 @@
-local composer = require( "composer" )
+local composer = require("composer")
 local scene = composer.newScene()
 
-function scene:create( event )
+function scene:create(event)
     local sceneGroup = self.view
 
     -- Adiciona o background
     local background = display.newImageRect(
-        sceneGroup, 
+        sceneGroup,
         "assets/images/Pag1/Pagina2.png",
         display.contentWidth,
         display.contentHeight
@@ -14,6 +14,12 @@ function scene:create( event )
 
     background.x = display.contentCenterX
     background.y = display.contentCenterY
+
+    -- Cria o overlay semitransparente
+    local overlay = display.newRect(sceneGroup, display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
+    overlay:setFillColor(0, 0, 0, 0.5) -- Cor preta com 50% de opacidade
+    overlay.isVisible = false
+    overlay.isHitTestable = true
 
     -- Função para mostrar/ocultar imagens associadas aos botões
     local function toggleImage(image)
