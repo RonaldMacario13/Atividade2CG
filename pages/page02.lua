@@ -40,6 +40,20 @@ function scene:create( event )
     btn1:addEventListener("tap", function()
         toggleImage(image1)
     end)
+
+    -- Botão 2
+    local btn2 = display.newImageRect(sceneGroup, "assets/images/Pag1/Crowd.png", 60, 60)
+    btn2.x = display.contentWidth / 2
+    btn2.y = display.contentHeight - 125
+
+    local image2 = display.newImageRect(sceneGroup, "assets/images/Pag1/Frame2.png", 10, 10)
+    image2.x = display.contentCenterX
+    image2.y = display.contentCenterY
+    image2.isVisible = false
+
+    btn2:addEventListener("tap", function()
+        toggleImage(image2)
+    end)
     local btnNext = display.newImage(sceneGroup, "assets/images/BtnNext.png")
     btnNext.x = display.contentWidth - 45
     btnNext.y = display.contentHeight - 40
