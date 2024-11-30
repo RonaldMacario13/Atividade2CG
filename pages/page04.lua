@@ -24,7 +24,6 @@ function scene:create(event)
     btnPrev.y = display.contentHeight - 40
     btnPrev:scale(0.8, 0.8)
     btnPrev:addEventListener("tap", function(event)
-        print("prev")
         composer.gotoScene("pages.page03")
     end)
 
@@ -83,4 +82,15 @@ function scene:create(event)
         end
         return true
     end
+
+    -- Ativar Multitouch
+    system.activate("multitouch")
+    map:addEventListener("touch", onPinch)
+end
+
+scene:addEventListener("create", scene)
+scene:addEventListener("show", scene)
+scene:addEventListener("hide", scene)
+scene:addEventListener("destroy", scene)
+
 return scene
