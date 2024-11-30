@@ -26,6 +26,20 @@ function scene:create( event )
             image:scale(10, 10)
         end
     end
+
+    -- Botão 1
+    local btn1 = display.newImageRect(sceneGroup, "assets/images/Pag1/Classroom.png", 60, 60)
+    btn1.x = display.contentWidth / 4
+    btn1.y = display.contentHeight - 125
+
+    local image1 = display.newImageRect(sceneGroup, "assets/images/Pag1/Frame1.png", 10 , 10)
+    image1.x = display.contentCenterX
+    image1.y = display.contentCenterY
+    image1.isVisible = false
+
+    btn1:addEventListener("tap", function()
+        toggleImage(image1)
+    end)
     local btnNext = display.newImage(sceneGroup, "assets/images/BtnNext.png")
     btnNext.x = display.contentWidth - 45
     btnNext.y = display.contentHeight - 40
