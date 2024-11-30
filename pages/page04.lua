@@ -27,13 +27,10 @@ function scene:create(event)
         print("prev")
         composer.gotoScene("pages.page03")
     end)
-end
 
-
-
-scene:addEventListener( "create", scene )
-scene:addEventListener( "show", scene )
-scene:addEventListener( "hide", scene )
-scene:addEventListener( "destroy", scene )
+    -- Mapa Interativo
+    local map = display.newImageRect(sceneGroup, "assets/images/Pag3/map.png", 150, 120)
+    map.x = display.contentCenterX
+    map.y = display.contentCenterY * 1.5
 
 return scene
