@@ -82,4 +82,13 @@ function scene:create(event)
             end
         end
     end
+
+    -- Movimentação do jogador
+    local function movePlayer(event)
+        local phase = event.phase
+        if phase == "began" or phase == "moved" then
+            player.x = event.x
+        end
+    end
+
 return scene
