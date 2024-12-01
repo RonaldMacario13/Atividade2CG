@@ -1,14 +1,16 @@
-local composer = require( "composer" )
+local composer = require("composer")
+local physics = require("physics")
 local scene = composer.newScene()
 
+-- Variável de pontuação
+local score = 0
 
-function scene:create( event )
+function scene:create(event)
     local sceneGroup = self.view
 
-    local bg = display.newRect(sceneGroup, display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
-    bg:setFillColor(1, 1, 1)
-
-    local pageText = display.newText({
+    -- Iniciar física
+    physics.start()
+    physics.setGravity(0, 0)
         parent = sceneGroup,
         text = "Página 05",
         x = display.contentWidth - 60,
