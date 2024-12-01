@@ -46,7 +46,7 @@ function scene:create( event )
     btnPrev:scale(0.8, 0.8)
     btnPrev:addEventListener("tap", function(event)
         print("prev")
-        composer.gotoScene("pages.page05")
+        composer.gotoScene("pages.page06")
     end)
 end
 

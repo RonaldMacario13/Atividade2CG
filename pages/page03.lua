@@ -179,7 +179,7 @@ function scene:create(event)
     btnPrev:scale(0.8, 0.8)
 
     btnPrev:addEventListener("tap", function(event)
-        composer.gotoScene("pages.page03")
+        composer.gotoScene("pages.page02")
     end)
 
 end

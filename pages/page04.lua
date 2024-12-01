@@ -86,6 +86,27 @@ function scene:create(event)
     -- Ativar Multitouch
     system.activate("multitouch")
     map:addEventListener("touch", onPinch)
+
+        -- Botão de avançar
+        local btnNext = display.newImage(sceneGroup, "assets/images/BtnNext.png")
+        btnNext.x = display.contentWidth - 45
+        btnNext.y = display.contentHeight - 40
+        btnNext:scale(0.8, 0.8)
+    
+        btnNext:addEventListener("tap", function(event)
+            composer.gotoScene("pages.page05", { effect = "fade" })
+        end)
+    
+        -- Botão de voltar
+        local btnPrev = display.newImage(sceneGroup, "assets/images/BtnLeft.png")
+        btnPrev.x = 40
+        btnPrev.y = display.contentHeight - 40
+        btnPrev:scale(0.8, 0.8)
+    
+        btnPrev:addEventListener("tap", function(event)
+            composer.gotoScene("pages.page03")
+        end)
+
 end
 
 scene:addEventListener("create", scene)
