@@ -62,4 +62,24 @@ function scene:create(event)
             display.remove(item)
         end })
     end
+
+    -- Colisão
+    local function onCollision(event)
+        if event.phase == "began" then
+            if event.object1.name == "player" and event.object2.name == "healthy" then
+                -- Elemento saudável coletado
+                display.remove(event.object2)
+                score = score + 10 
+                scoreText.text = "Pontuação: " .. score 
+                print("Item saudável coletado!")
+
+            elseif event.object1.name == "player" and event.object2.name == "unhealthy" then
+                -- Elemento não saudável atingido
+                display.remove(event.object2)
+                score = score - 5 -- Penalidade na pontuação
+                scoreText.text = "Pontuação: " .. score 
+                print("Evite itens não saudáveis!")
+            end
+        end
+    end
 return scene
