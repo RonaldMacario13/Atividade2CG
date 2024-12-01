@@ -71,4 +71,14 @@ function scene:create(event)
             end)
         end
     end
+
+    -- Adicionar Listener para Shake
+    Runtime:addEventListener("accelerometer", onShake)
+end
+
+scene:addEventListener("create", scene)
+scene:addEventListener("show", scene)
+scene:addEventListener("hide", scene)
+scene:addEventListener("destroy", scene)
+
 return scene
