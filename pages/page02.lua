@@ -17,7 +17,7 @@ function scene:create(event)
 
     -- Cria o overlay semitransparente
     local overlay = display.newRect(sceneGroup, display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
-    overlay:setFillColor(0, 0, 0, 0.5) -- Cor preta com 50% de opacidade
+    overlay:setFillColor(0, 0, 0, 0.5)
     overlay.isVisible = false
     overlay.isHitTestable = true
 
@@ -34,8 +34,8 @@ function scene:create(event)
 
         -- Mostra a nova imagem
         image.isVisible = true
-        overlay:toFront() -- Move o overlay para o topo
-        image:toFront() -- Garante que a imagem fique acima do overlay
+        overlay:toFront()
+        image:toFront()
     end
 
     -- Função para fechar qualquer imagem aberta

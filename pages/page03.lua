@@ -113,7 +113,7 @@ function scene:create(event)
             end
         end
     
-        -- Exemplo de interrupção automática após 10 segundos (ajuste conforme necessário)
+        -- Exemplo de interrupção automática após 10 segundos
         timer.performWithDelay(10000, stopAnimation)
     end
 
