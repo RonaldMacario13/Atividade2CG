@@ -49,4 +49,17 @@ function scene:create(event)
         end })
     end
 
+    -- Elementos não saudáveis
+    local function spawnUnhealthyItem()
+        local item = display.newImageRect(sceneGroup, "assets/images/Pag5/Hamburguer.png", 40, 40)
+        item.x = math.random(40, display.contentWidth - 40)
+        item.y = -50
+        physics.addBody(item, { radius = 20, isSensor = true })
+        item.name = "unhealthy"
+
+        -- Movimento para baixo
+        transition.to(item, { y = display.contentHeight + 50, time = 4000, onComplete = function()
+            display.remove(item)
+        end })
+    end
 return scene
