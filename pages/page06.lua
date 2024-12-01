@@ -11,6 +11,11 @@ function scene:create(event)
     -- Iniciar física
     physics.start()
     physics.setGravity(0, 0)
+
+    -- Fundo
+    local background = display.newImageRect(sceneGroup, "assets/images/Pag5/Pagina6.png", display.contentWidth, display.contentHeight)
+    background.x = display.contentCenterX
+    background.y = display.contentCenterY
         parent = sceneGroup,
         text = "Página 05",
         x = display.contentWidth - 60,
