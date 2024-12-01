@@ -28,13 +28,25 @@ function scene:create(event)
     })
     scoreText:setFillColor(1, 1, 1)
 
-end
+    -- Personagem controlável
+    local player = display.newImageRect(sceneGroup, "assets/images/Pag5/player.png", 50, 50)
+    player.x = display.contentCenterX
+    player.y = display.contentHeight - 80
+    physics.addBody(player, { radius = 25, isSensor = true })
+    player.name = "player"
 
+    -- Elementos saudáveis
+    local function spawnHealthyItem()
+        local item = display.newImageRect(sceneGroup, "assets/images/Pag5/SliceOfWatermelon.png", 40, 40)
+        item.x = math.random(40, display.contentWidth - 40)
+        item.y = -50
+        physics.addBody(item, { radius = 20, isSensor = true })
+        item.name = "healthy"
 
-
-scene:addEventListener( "create", scene )
-scene:addEventListener( "show", scene )
-scene:addEventListener( "hide", scene )
-scene:addEventListener( "destroy", scene )
+        -- Movimento para baixo
+        transition.to(item, { y = display.contentHeight + 50, time = 4000, onComplete = function()
+            display.remove(item)
+        end })
+    end
 
 return scene
