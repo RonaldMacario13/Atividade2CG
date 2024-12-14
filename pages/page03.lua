@@ -1,6 +1,8 @@
 local composer = require("composer")
 local scene = composer.newScene()
 
+local pageAudio
+
 function scene:create(event)
     local sceneGroup = self.view
 
@@ -9,18 +11,18 @@ function scene:create(event)
     background.x = display.contentCenterX
     background.y = display.contentCenterY
 
+    pageAudio = audio.loadStream("assets/audio/P2.mp3")
+
     -- Áreas da escola
     local cafeteria = display.newImageRect(sceneGroup, "assets/images/Pag2/Tableware.png", 100, 100)
     cafeteria.x = display.contentWidth * 0.25
     cafeteria.y = display.contentHeight * 0.6
 
-    local gym = display.newImageRect(sceneGroup, "assets/images/Pag2/Dumbbell.png", 100
-, 100)
+    local gym = display.newImageRect(sceneGroup, "assets/images/Pag2/Dumbbell.png", 100, 100)
     gym.x = display.contentWidth * 0.5
     gym.y = display.contentHeight * 0.6
 
-    local classroom = display.newImageRect(sceneGroup, "assets/images/Pag2/classroom.png", 100
-, 100)
+    local classroom = display.newImageRect(sceneGroup, "assets/images/Pag2/Classroom.png", 100, 100)
     classroom.x = display.contentWidth * 0.75
     classroom.y = display.contentHeight * 0.6
 
@@ -169,7 +171,7 @@ function scene:create(event)
     btnNext:scale(0.8, 0.8)
 
     btnNext:addEventListener("tap", function(event)
-        composer.gotoScene("pages.page04", { effect = "fade" })
+        composer.gotoScene("pages.page04", { effect = "fade" , time = 100 })
     end)
 
     -- Botão de voltar
@@ -182,7 +184,59 @@ function scene:create(event)
         composer.gotoScene("pages.page02")
     end)
 
+    local home = display.newImage(
+        sceneGroup,
+        "assets/images/home.png"
+    )
+    home.x = display.contentWidth - 45
+    home.y = display.contentHeight - 440 
+    home:scale(0.8, 0.8)
+
+    home:addEventListener("tap", function(event)
+        print("home")
+        composer.gotoScene("pages.capa")
+    end)
+end
+
+function scene:show(event)
+    local sceneGroup = self.view
+    local phase = event.phase
+
+    if (phase == "will") then
+        -- Code here runs when the scene is still off screen (but is about to come on screen)
+
+    elseif (phase == "did") then
+        if pageAudio then
+            audio.stop(1)
+            audio.seek(0, pageAudio)
+            audio.play(pageAudio, { channel = 1, loops = 0 })
+        end
+    end
+end
+
+function scene:hide(event)
+    local sceneGroup = self.view
+    local phase = event.phase
+
+    if (phase == "will") then
+        -- Para o áudio quando a cena estiver saindo
+        audio.stop(1) -- Para o canal onde o áudio está tocando
+    end
+end
+
+function scene:destroy(event)
+    local sceneGroup = self.view
+
+    -- Libera o áudio para evitar vazamento de memória
+    if pageAudio then
+        audio.dispose(pageAudio)
+        pageAudio = nil
+    end
 end
 
 scene:addEventListener("create", scene)
+scene:addEventListener("show", scene)
+scene:addEventListener("hide", scene)
+scene:addEventListener("destroy", scene)
+
 return scene
