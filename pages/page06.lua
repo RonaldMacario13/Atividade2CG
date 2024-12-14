@@ -2,6 +2,8 @@ local composer = require("composer")
 local physics = require("physics")
 local scene = composer.newScene()
 
+local pageAudio
+
 -- Variável de pontuação
 local score = 0
 
@@ -16,6 +18,8 @@ function scene:create(event)
     local background = display.newImageRect(sceneGroup, "assets/images/Pag5/Pagina6.png", display.contentWidth, display.contentHeight)
     background.x = display.contentCenterX
     background.y = display.contentCenterY
+
+    pageAudio = audio.loadStream("assets/audio/P5.mp3")
 
     -- Texto da pontuação
     local scoreText = display.newText({
@@ -99,25 +103,74 @@ function scene:create(event)
     Runtime:addEventListener("collision", onCollision)
     Runtime:addEventListener("touch", movePlayer)
 
-        -- Botão de avançar
-        local btnNext = display.newImage(sceneGroup, "assets/images/BtnNext.png")
-        btnNext.x = display.contentWidth - 45
-        btnNext.y = display.contentHeight - 40
-        btnNext:scale(0.8, 0.8)
-    
-        btnNext:addEventListener("tap", function(event)
-            composer.gotoScene("pages.contraCapa", { effect = "fade" })
-        end)
-    
-        -- Botão de voltar
-        local btnPrev = display.newImage(sceneGroup, "assets/images/BtnLeft.png")
-        btnPrev.x = 40
-        btnPrev.y = display.contentHeight - 40
-        btnPrev:scale(0.8, 0.8)
-    
-        btnPrev:addEventListener("tap", function(event)
-            composer.gotoScene("pages.page05")
-        end)
+    -- Botão de avançar
+    local btnNext = display.newImage(sceneGroup, "assets/images/BtnNext.png")
+    btnNext.x = display.contentWidth - 45
+    btnNext.y = display.contentHeight - 40
+    btnNext:scale(0.8, 0.8)
+
+    btnNext:addEventListener("tap", function(event)
+        composer.gotoScene("pages.contraCapa", { effect = "fade" , time = 100 })
+    end)
+
+    -- Botão de voltar
+    local btnPrev = display.newImage(sceneGroup, "assets/images/BtnLeft.png")
+    btnPrev.x = 40
+    btnPrev.y = display.contentHeight - 40
+    btnPrev:scale(0.8, 0.8)
+
+    btnPrev:addEventListener("tap", function(event)
+        composer.gotoScene("pages.page05")
+    end)
+
+    local home = display.newImage(
+        sceneGroup,
+        "assets/images/home.png"
+    )
+    home.x = display.contentWidth - 45
+    home.y = display.contentHeight - 440 
+    home:scale(0.8, 0.8)
+
+    home:addEventListener("tap", function(event)
+        print("home")
+        composer.gotoScene("pages.capa")
+    end)
+end
+
+function scene:show(event)
+    local sceneGroup = self.view
+    local phase = event.phase
+
+    if (phase == "will") then
+        -- Code here runs when the scene is still off screen (but is about to come on screen)
+
+    elseif (phase == "did") then
+        if pageAudio then
+            audio.stop(1)
+            audio.seek(0, pageAudio)
+            audio.play(pageAudio, { channel = 1, loops = 0 })
+        end
+    end
+end
+
+function scene:hide(event)
+    local sceneGroup = self.view
+    local phase = event.phase
+
+    if (phase == "will") then
+        -- Para o áudio quando a cena estiver saindo
+        audio.stop(1) -- Para o canal onde o áudio está tocando
+    end
+end
+
+function scene:destroy(event)
+    local sceneGroup = self.view
+
+    -- Libera o áudio para evitar vazamento de memória
+    if pageAudio then
+        audio.dispose(pageAudio)
+        pageAudio = nil
+    end
 end
 
 scene:addEventListener("create", scene)
