@@ -25,16 +25,17 @@ function scene:create( event )
     )
     background.x = display.contentCenterX  -- centraliza horizontalmente
     background.y = display.contentCenterY  -- centraliza verticalmente
-    local btnNext = display.newImage(
+    
+    local home = display.newImage(
         sceneGroup,
         "assets/images/home.png"
     )
-    btnNext.x = display.contentWidth - 45
-    btnNext.y = display.contentHeight - 440 
-    btnNext:scale(0.8, 0.8)
+    home.x = display.contentWidth - 45
+    home.y = display.contentHeight - 440 
+    home:scale(0.8, 0.8)
 
-    btnNext:addEventListener("tap", function(event)
-        print("next")
+    home:addEventListener("tap", function(event)
+        print("home")
         composer.gotoScene("pages.capa")
     end)
 
