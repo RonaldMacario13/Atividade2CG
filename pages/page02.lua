@@ -125,7 +125,7 @@ function scene:create(event)
 
     home:addEventListener("tap", function(event)
         print("home")
-        composer.gotoScene("pages.capa")
+        composer.gotoScene("pages.Capa")
     end)
 end
 
