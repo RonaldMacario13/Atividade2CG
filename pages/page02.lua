@@ -1,6 +1,8 @@
 local composer = require("composer")
 local scene = composer.newScene()
 
+local pageAudio
+
 function scene:create(event)
     local sceneGroup = self.view
 
@@ -14,6 +16,8 @@ function scene:create(event)
 
     background.x = display.contentCenterX
     background.y = display.contentCenterY
+
+    pageAudio = audio.loadStream("assets/audio/P1.mp3")
 
     -- Cria o overlay semitransparente
     local overlay = display.newRect(sceneGroup, display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
@@ -98,7 +102,7 @@ function scene:create(event)
     btnNext:scale(0.8, 0.8)
 
     btnNext:addEventListener("tap", function(event)
-        composer.gotoScene("pages.page03", { effect = "fade" })
+        composer.gotoScene("pages.page03", { effect = "fade", time = 100  })
     end)
 
     -- Botão de voltar
@@ -110,6 +114,19 @@ function scene:create(event)
     btnPrev:addEventListener("tap", function(event)
         composer.gotoScene("pages.Capa")
     end)
+
+    local home = display.newImage(
+        sceneGroup,
+        "assets/images/home.png"
+    )
+    home.x = display.contentWidth - 45
+    home.y = display.contentHeight - 440 
+    home:scale(0.8, 0.8)
+
+    home:addEventListener("tap", function(event)
+        print("home")
+        composer.gotoScene("pages.capa")
+    end)
 end
 
 function scene:show(event)
@@ -120,8 +137,11 @@ function scene:show(event)
         -- Code here runs when the scene is still off screen (but is about to come on screen)
 
     elseif (phase == "did") then
-        -- Code here runs when the scene is entirely on screen
-
+        if not _G.isMuted and pageAudio then
+            audio.stop(1)
+            audio.seek(0, pageAudio)
+            audio.play(pageAudio, { channel = 1, loops = 0 })
+        end
     end
 end
 
@@ -130,7 +150,7 @@ function scene:hide(event)
     local phase = event.phase
 
     if (phase == "will") then
-        -- Code here runs when the scene is on screen (but is about to go off screen)
+        audio.stop(1)
 
     elseif (phase == "did") then
         -- Code here runs immediately after the scene goes entirely off screen
@@ -140,7 +160,10 @@ end
 
 function scene:destroy(event)
     local sceneGroup = self.view
-    -- Code here runs prior to the removal of scene's view
+    if pageAudio then
+        audio.dispose(pageAudio)
+        pageAudio = nil
+    end
 
 end
 
