@@ -86,7 +86,7 @@ function scene:create(event)
 
     -- Mapa Interativo
     map = display.newImageRect(sceneGroup, "assets/images/Pag3/map.png", 150, 120)
-    map.x = display.contentCenterX
+    map.x = display.contentCenterX - 40
     map.y = display.contentCenterY
 
     -- Camadas (invisíveis inicialmente)
@@ -105,13 +105,36 @@ function scene:create(event)
     communityLayer.y = display.contentHeight * 0.5
     communityLayer.isVisible = false
 
-    -- Botões
+    -- Botões Avançar
     local btnNext = display.newImage(sceneGroup, "assets/images/BtnNext.png")
     btnNext.x = display.contentWidth - 45
     btnNext.y = display.contentHeight - 40
     btnNext:scale(0.8, 0.8)
     btnNext:addEventListener("tap", function(event)
-        composer.gotoScene("pages.page05", { effect = "fade" })
+        composer.gotoScene("pages.page05", { effect = "fade" time = 100 })
+    end)
+
+    -- Botão de voltar
+    local btnPrev = display.newImage(sceneGroup, "assets/images/BtnLeft.png")
+    btnPrev.x = 40
+    btnPrev.y = display.contentHeight - 40
+    btnPrev:scale(0.8, 0.8)
+
+    btnPrev:addEventListener("tap", function(event)
+        composer.gotoScene("pages.page03")
+    end)
+
+    local home = display.newImage(
+        sceneGroup,
+        "assets/images/home.png"
+    )
+    home.x = display.contentWidth - 45
+    home.y = display.contentHeight - 440 
+    home:scale(0.8, 0.8)
+
+    home:addEventListener("tap", function(event)
+        print("home")
+        composer.gotoScene("pages.Capa")
     end)
 end
 
