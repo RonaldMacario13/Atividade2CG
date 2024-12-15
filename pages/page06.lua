@@ -4,9 +4,6 @@ local scene = composer.newScene()
 
 local pageAudio
 
--- Variável de pontuação
-local score = 0
-
 function scene:create(event)
     local sceneGroup = self.view
 
@@ -21,19 +18,8 @@ function scene:create(event)
 
     pageAudio = audio.loadStream("assets/audio/P5.mp3")
 
-    -- Texto da pontuação
-    local scoreText = display.newText({
-        parent = sceneGroup,
-        text = "Pontuação: 0",
-        x = display.contentCenterX,
-        y = display.contentCenterY * 1.1,
-        font = native.systemFontBold,
-        fontSize = 24
-    })
-    scoreText:setFillColor(1, 1, 1)
-
     -- Personagem controlável
-    local player = display.newImageRect(sceneGroup, "assets/images/Pag5/player.png", 50, 50)
+    local player = display.newImageRect(sceneGroup, "assets/images/Pag5/player_happy.png", 50, 50)
     player.x = display.contentCenterX
     player.y = display.contentHeight - 80
     physics.addBody(player, { radius = 25, isSensor = true })
@@ -73,15 +59,13 @@ function scene:create(event)
             if event.object1.name == "player" and event.object2.name == "healthy" then
                 -- Elemento saudável coletado
                 display.remove(event.object2)
-                score = score + 10 
-                scoreText.text = "Pontuação: " .. score 
+                player.fill = { type = "image", filename = "assets/images/Pag5/player_happy.png" }
                 print("Item saudável coletado!")
 
             elseif event.object1.name == "player" and event.object2.name == "unhealthy" then
                 -- Elemento não saudável atingido
                 display.remove(event.object2)
-                score = score - 5 -- Penalidade na pontuação
-                scoreText.text = "Pontuação: " .. score 
+                player.fill = { type = "image", filename = "assets/images/Pag5/player_sick.png" }
                 print("Evite itens não saudáveis!")
             end
         end
@@ -97,7 +81,7 @@ function scene:create(event)
 
     -- Spawn periódico de itens
     timer.performWithDelay(1000, spawnHealthyItem, 0)
-    timer.performWithDelay(1500, spawnUnhealthyItem, 0) 
+    timer.performWithDelay(1500, spawnUnhealthyItem, 0)
 
     -- Adicionar Listeners
     Runtime:addEventListener("collision", onCollision)
@@ -128,11 +112,10 @@ function scene:create(event)
         "assets/images/home.png"
     )
     home.x = display.contentWidth - 45
-    home.y = display.contentHeight - 440 
+    home.y = display.contentHeight - 440
     home:scale(0.8, 0.8)
 
     home:addEventListener("tap", function(event)
-        print("home")
         composer.gotoScene("pages.Capa")
     end)
 end
@@ -141,10 +124,7 @@ function scene:show(event)
     local sceneGroup = self.view
     local phase = event.phase
 
-    if (phase == "will") then
-        -- Code here runs when the scene is still off screen (but is about to come on screen)
-
-    elseif (phase == "did") then
+    if (phase == "did") then
         if pageAudio then
             audio.stop(1)
             audio.seek(0, pageAudio)
@@ -159,7 +139,7 @@ function scene:hide(event)
 
     if (phase == "will") then
         -- Para o áudio quando a cena estiver saindo
-        audio.stop(1) -- Para o canal onde o áudio está tocando
+        audio.stop(1)
     end
 end
 
