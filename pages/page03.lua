@@ -220,7 +220,7 @@ function scene:hide(event)
 
     if (phase == "will") then
         -- Para o áudio quando a cena estiver saindo
-        audio.stop(1) -- Para o canal onde o áudio está tocando
+        audio.stop(1)
     end
 end
 

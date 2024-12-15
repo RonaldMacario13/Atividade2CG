@@ -7,6 +7,8 @@ local finger1, finger2
 local initialDistance
 local isZooming = false
 
+local pageAudio
+
 -- Ativa multitouch
 system.activate("multitouch")
 
@@ -84,6 +86,8 @@ function scene:create(event)
     background.x = display.contentCenterX
     background.y = display.contentCenterY
 
+    pageAudio = audio.loadStream("assets/audio/P3.mp3")
+
     -- Mapa Interativo
     map = display.newImageRect(sceneGroup, "assets/images/Pag3/map.png", 150, 120)
     map.x = display.contentCenterX - 40
@@ -111,7 +115,7 @@ function scene:create(event)
     btnNext.y = display.contentHeight - 40
     btnNext:scale(0.8, 0.8)
     btnNext:addEventListener("tap", function(event)
-        composer.gotoScene("pages.page05", { effect = "fade" time = 100 })
+        composer.gotoScene("pages.page05", { effect = "fade", time = 100 })
     end)
 
     -- Botão de voltar
@@ -142,16 +146,26 @@ function scene:show(event)
     if event.phase == "did" then
         Runtime:addEventListener("touch", onTouch)
     end
+
+    if pageAudio then
+        audio.stop(1)
+        audio.seek(0, pageAudio)
+        audio.play(pageAudio, { channel = 1, loops = 0 })
+    end
 end
 
 function scene:hide(event)
     if event.phase == "will" then
         Runtime:removeEventListener("touch", onTouch)
+        audio.stop(1)
     end
 end
 
 function scene:destroy(event)
-    -- Libera recursos, se necessário
+    if pageAudio then
+        audio.dispose(pageAudio)
+        pageAudio = nil
+    end
 end
 
 scene:addEventListener("create", scene)
