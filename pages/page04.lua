@@ -90,8 +90,8 @@ function scene:create(event)
 
     -- Mapa Interativo
     map = display.newImageRect(sceneGroup, "assets/images/Pag3/map.png", 150, 120)
-    map.x = display.contentCenterX - 40
-    map.y = display.contentCenterY
+    map.x = display.contentCenterX
+    map.y = display.contentCenterY + 100
 
     -- Camadas (invisíveis inicialmente)
     schoolLayer = display.newImageRect(sceneGroup, "assets/images/Pag3/Classroom.png", 200, 150)
