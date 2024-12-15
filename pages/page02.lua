@@ -2,6 +2,33 @@ local composer = require("composer")
 local scene = composer.newScene()
 
 local pageAudio
+local characters = {
+    classroom = {},
+    crowd = {},
+    business = {}
+}
+
+local function animateCharacter(character)
+    -- Troca o sprite para a versão feliz
+    character.fill = { type = "image", filename = character.happySprite }
+    -- Anima o personagem (balançar)
+    transition.to(character, {
+        xScale = 1.1, yScale = 1.1,
+        time = 200, iterations = 5,
+        onComplete = function()
+            -- Retorna ao sprite triste após 5 segundos
+            character.fill = { type = "image", filename = character.sadSprite }
+            character.xScale = 1
+            character.yScale = 1
+        end
+    })
+end
+
+local function toggleGroup(group)
+    for _, character in ipairs(characters[group]) do
+        animateCharacter(character)
+    end
+end
 
 function scene:create(event)
     local sceneGroup = self.view
@@ -19,81 +46,51 @@ function scene:create(event)
 
     pageAudio = audio.loadStream("assets/audio/P1.mp3")
 
-    -- Cria o overlay semitransparente
-    local overlay = display.newRect(sceneGroup, display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
-    overlay:setFillColor(0, 0, 0, 0.5)
-    overlay.isVisible = false
-    overlay.isHitTestable = true
-
-    -- Declara as imagens como variáveis globais ao escopo da função `scene:create`
-    local image1, image2, image3
-
-    -- Função para mostrar/ocultar imagens associadas aos botões
-    local function toggleImage(image)
-        -- Fecha todas as imagens abertas antes de abrir a nova
-        overlay.isVisible = true
-        if image1 then image1.isVisible = false end
-        if image2 then image2.isVisible = false end
-        if image3 then image3.isVisible = false end
-
-        -- Mostra a nova imagem
-        image.isVisible = true
-        overlay:toFront()
-        image:toFront()
+    -- Adiciona personagens
+    local function createCharacter(group, sadSprite, happySprite, x, y)
+        local character = display.newImageRect(sceneGroup, sadSprite, 50, 50)
+        character.x = x
+        character.y = y
+        character.sadSprite = sadSprite
+        character.happySprite = happySprite
+        table.insert(characters[group], character)
     end
 
-    -- Função para fechar qualquer imagem aberta
-    local function closeImage()
-        overlay.isVisible = false
-        if image1 then image1.isVisible = false end
-        if image2 then image2.isVisible = false end
-        if image3 then image3.isVisible = false end
-    end
+    -- Classroom characters
+    createCharacter("classroom", "assets/images/Pag1/personagens/menina.png", "assets/images/Pag1/personagens/menina-1.png", 40, 295)
+    createCharacter("classroom", "assets/images/Pag1/personagens/menino2.png", "assets/images/Pag1/personagens/menino2-1.png", 90, 295)
 
-    -- Botão 1
-    local btn1 = display.newImageRect(sceneGroup, "assets/images/Pag1/Classroom.png", 60, 60)
-    btn1.x = display.contentWidth / 4
-    btn1.y = display.contentHeight - 125
+    -- Crowd characters
+    createCharacter("crowd", "assets/images/Pag1/personagens/menino-1.png", "assets/images/Pag1/personagens/menino.png", 140, 295)
+    createCharacter("crowd", "assets/images/Pag1/personagens/mulher.png", "assets/images/Pag1/personagens/mulher-1.png", 190, 295)
 
-    image1 = display.newImageRect(sceneGroup, "assets/images/Pag1/Frame1.png", 300, 300)
-    image1.x = display.contentCenterX
-    image1.y = display.contentCenterY
-    image1.isVisible = false
+    -- Business characters
+    createCharacter("business", "assets/images/Pag1/personagens/ruivo.png", "assets/images/Pag1/personagens/ruivo-1.png", 240, 295)
+    createCharacter("business", "assets/images/Pag1/personagens/mulherruiva-1.png", "assets/images/Pag1/personagens/mulherruiva.png", 290, 295)
 
-    btn1:addEventListener("tap", function()
-        toggleImage(image1)
+    -- Botão de Classroom
+    local btnClassroom = display.newImageRect(sceneGroup, "assets/images/Pag1/Classroom.png", 60, 60)
+    btnClassroom.x = display.contentWidth / 4
+    btnClassroom.y = display.contentHeight - 125
+    btnClassroom:addEventListener("tap", function()
+        toggleGroup("classroom")
     end)
 
-    -- Botão 2
-    local btn2 = display.newImageRect(sceneGroup, "assets/images/Pag1/Crowd.png", 60, 60)
-    btn2.x = display.contentWidth / 2
-    btn2.y = display.contentHeight - 125
-
-    image2 = display.newImageRect(sceneGroup, "assets/images/Pag1/Frame2.png", 300, 300)
-    image2.x = display.contentCenterX
-    image2.y = display.contentCenterY
-    image2.isVisible = false
-
-    btn2:addEventListener("tap", function()
-        toggleImage(image2)
+    -- Botão de Crowd
+    local btnCrowd = display.newImageRect(sceneGroup, "assets/images/Pag1/Crowd.png", 60, 60)
+    btnCrowd.x = display.contentWidth / 2
+    btnCrowd.y = display.contentHeight - 125
+    btnCrowd:addEventListener("tap", function()
+        toggleGroup("crowd")
     end)
 
-    -- Botão 3
-    local btn3 = display.newImageRect(sceneGroup, "assets/images/Pag1/Business.png", 60, 60)
-    btn3.x = 3 * display.contentWidth / 4
-    btn3.y = display.contentHeight - 125
-
-    image3 = display.newImageRect(sceneGroup, "assets/images/Pag1/Frame3.png", 300, 300)
-    image3.x = display.contentCenterX
-    image3.y = display.contentCenterY
-    image3.isVisible = false
-
-    btn3:addEventListener("tap", function()
-        toggleImage(image3)
+    -- Botão de Business
+    local btnBusiness = display.newImageRect(sceneGroup, "assets/images/Pag1/Business.png", 60, 60)
+    btnBusiness.x = 3 * display.contentWidth / 4
+    btnBusiness.y = display.contentHeight - 125
+    btnBusiness:addEventListener("tap", function()
+        toggleGroup("business")
     end)
-
-    -- Adiciona o evento de toque no overlay para fechar a imagem
-    overlay:addEventListener("tap", closeImage)
 
     -- Botão de avançar
     local btnNext = display.newImage(sceneGroup, "assets/images/BtnNext.png")
@@ -102,7 +99,7 @@ function scene:create(event)
     btnNext:scale(0.8, 0.8)
 
     btnNext:addEventListener("tap", function(event)
-        composer.gotoScene("pages.page03", { effect = "fade", time = 100  })
+        composer.gotoScene("pages.page03", { effect = "fade", time = 100 })
     end)
 
     -- Botão de voltar
@@ -115,16 +112,16 @@ function scene:create(event)
         composer.gotoScene("pages.Capa")
     end)
 
+    -- Botão Home
     local home = display.newImage(
         sceneGroup,
         "assets/images/home.png"
     )
     home.x = display.contentWidth - 45
-    home.y = display.contentHeight - 440 
+    home.y = display.contentHeight - 440
     home:scale(0.8, 0.8)
 
     home:addEventListener("tap", function(event)
-        print("home")
         composer.gotoScene("pages.Capa")
     end)
 end
@@ -164,7 +161,6 @@ function scene:destroy(event)
         audio.dispose(pageAudio)
         pageAudio = nil
     end
-
 end
 
 scene:addEventListener("create", scene)

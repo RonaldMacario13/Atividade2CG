@@ -2,14 +2,14 @@ local composer = require( "composer" )
  
 composer.gotoScene("pages.Capa")
 
--- Variável global para controlar o estado do som (mudo ou não)
+-- Variável global para controlar o estado do som
 _G.isMuted = false
 
 -- Função para criar o botão de Mute
 local function createMuteButton()
     -- Cria o botão de Mute como uma imagem
     local muteButton = display.newImageRect(
-        "assets/images/SoundOn.png", -- Imagem inicial (som ativo)
+        "assets/images/SoundOn.png",
         60,
         60
     )
@@ -21,11 +21,11 @@ local function createMuteButton()
         if _G.isMuted then
             _G.isMuted = false
             muteButton.fill = { type = "image", filename = "assets/images/SoundOn.png" }
-            audio.setVolume(1) -- Ativa o som
+            audio.setVolume(1) 
         else
             _G.isMuted = true
             muteButton.fill = { type = "image", filename = "assets/images/SoundOff.png" }
-            audio.setVolume(0) -- Silencia o som
+            audio.setVolume(0) 
         end
     end
 
@@ -38,4 +38,4 @@ end
 
 -- Adiciona o botão Mute à interface global
 local muteButton = createMuteButton()
-muteButton:toFront() -- Garante que o botão esteja sempre visível
+muteButton:toFront()
