@@ -3,6 +3,8 @@ local scene = composer.newScene()
 
 local pageAudio
 
+system.activate("multitouch")
+
 function scene:create(event)
     local sceneGroup = self.view
 
@@ -87,8 +89,6 @@ function scene:create(event)
         return true
     end
 
-    -- Ativar Multitouch
-    system.activate("multitouch")
     map:addEventListener("touch", onPinch)
 
     -- Botão de avançar
