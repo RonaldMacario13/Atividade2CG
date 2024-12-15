@@ -4,6 +4,20 @@ local scene = composer.newScene()
 
 local pageAudio
 
+local healthyItems = {
+    { image = "assets/images/Pag5/SliceOfWatermelon.png", size = 40 },
+    { image = "assets/images/Pag5/BittenApple.png", size = 40 },
+    { image = "assets/images/Pag5/Plastic.png", size = 40 },
+    { image = "assets/images/Pag5/Steak.png", size = 40 }
+}
+
+local unhealthyItems = {
+    { image = "assets/images/Pag5/Hamburguer.png", size = 40 },
+    { image = "assets/images/Pag5/Pizza.png", size = 40 },
+    { image = "assets/images/Pag5/FrenchFries.png", size = 40 },
+    { image = "assets/images/Pag5/Cola.png", size = 40 }
+}
+
 function scene:create(event)
     local sceneGroup = self.view
 
@@ -27,12 +41,14 @@ function scene:create(event)
 
     -- Elementos saudáveis
     local function spawnHealthyItem()
-        local item = display.newImageRect(sceneGroup, "assets/images/Pag5/SliceOfWatermelon.png", 40, 40)
+        -- Seleciona um item aleatório da lista saudável
+        local itemData = healthyItems[math.random(#healthyItems)]
+        local item = display.newImageRect(sceneGroup, itemData.image, itemData.size, itemData.size)
         item.x = math.random(40, display.contentWidth - 40)
         item.y = -50
-        physics.addBody(item, { radius = 20, isSensor = true })
+        physics.addBody(item, { radius = itemData.size / 2, isSensor = true })
         item.name = "healthy"
-
+    
         -- Movimento para baixo
         transition.to(item, { y = display.contentHeight + 50, time = 4000, onComplete = function()
             display.remove(item)
@@ -41,12 +57,14 @@ function scene:create(event)
 
     -- Elementos não saudáveis
     local function spawnUnhealthyItem()
-        local item = display.newImageRect(sceneGroup, "assets/images/Pag5/Hamburguer.png", 40, 40)
+        -- Seleciona um item aleatório da lista não saudável
+        local itemData = unhealthyItems[math.random(#unhealthyItems)]
+        local item = display.newImageRect(sceneGroup, itemData.image, itemData.size, itemData.size)
         item.x = math.random(40, display.contentWidth - 40)
         item.y = -50
-        physics.addBody(item, { radius = 20, isSensor = true })
+        physics.addBody(item, { radius = itemData.size / 2, isSensor = true })
         item.name = "unhealthy"
-
+    
         -- Movimento para baixo
         transition.to(item, { y = display.contentHeight + 50, time = 4000, onComplete = function()
             display.remove(item)
@@ -80,8 +98,8 @@ function scene:create(event)
     end
 
     -- Spawn periódico de itens
-    timer.performWithDelay(1000, spawnHealthyItem, 0)
-    timer.performWithDelay(1500, spawnUnhealthyItem, 0)
+    timer.performWithDelay(2000, spawnHealthyItem, 0)
+    timer.performWithDelay(2500, spawnUnhealthyItem, 0)
 
     -- Adicionar Listeners
     Runtime:addEventListener("collision", onCollision)
